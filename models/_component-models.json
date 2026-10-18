@@ -1,27 +1,5 @@
 [
   {
-  "id": "page-metadata",
-  "fields": [
-    {
-      "component": "text",
-      "name": "category",
-      "label": "Categoría",
-      "valueType": "string"
-    },
-    {
-      "component": "text",
-      "name": "author",
-      "label": "Autor",
-      "valueType": "string"
-    },
-    {
-      "component": "date-time",
-      "name": "publicationDate",
-      "label": "Fecha de publicación"
-    }
-  ]
-},
-  {
     "...": "./_page.json#/models"
   },
   {
