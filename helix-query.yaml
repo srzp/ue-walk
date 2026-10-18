@@ -8,6 +8,10 @@ indices:
       - '/**.json'
     target: /query-index.json
     properties:
+      pageTitle:
+        select: head > meta[property="pageTitle"]
+        value: |
+          attribute(el, 'content')
       lastModified:
         select: none
         value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
