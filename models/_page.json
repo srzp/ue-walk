@@ -21,6 +21,13 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
+        },
+         {
+          "component": "text",
+          "name": "template",
+          "label": "Template",
+          "valueType": "string",
+          "value": ""
         }
       ]
     }

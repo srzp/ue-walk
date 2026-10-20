@@ -20,6 +20,13 @@
         "name": "keywords",
         "multi": true,
         "label": "Keywords"
+      },
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": ""
       }
     ]
   },
@@ -268,18 +275,6 @@
         "name": "textContent_ctaText",
         "label": "CTA label",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "page-metadata",
-    "fields": [
-      {
-        "component": "text",
-        "name": "template",
-        "label": "Template",
-        "valueType": "string",
-        "value": ""
       }
     ]
   },
