@@ -16,7 +16,7 @@ module.exports = {
   },
   rules: {
     'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
-    'linebreak-style': 'off', // enforce unix linebreaks ['error', 'unix']
+    'linebreak-style': 'off', // enforce unix linebreaks 
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
   },
 };
