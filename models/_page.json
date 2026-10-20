@@ -6,12 +6,6 @@
         {
           "component": "text",
           "valueType": "string",
-          "name": "template",
-          "label": "TemplateSSS"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
           "name": "jcr:title",
           "label": "Title"
         },
@@ -27,10 +21,8 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
-        }      
-
+        }
       ]
     }
-    
   ]
 }
