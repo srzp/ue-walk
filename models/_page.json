@@ -21,56 +21,15 @@
           "name": "keywords",
           "multi": true,
           "label": "Keywords"
-        }
-      ]
-    },
-    {
-      "id": "page-cat-metadata",
-      "fields": [
+        },      
         {
           "component": "text",
           "valueType": "string",
-          "name": "jcr:title",
-          "label": "Title"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "jcr:description",
-          "label": "Description"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "keywords",
-          "multi": true,
-          "label": "Keywords"
-        }
-      ]
-    },
-    {
-      "id": "page-post-metadata",
-      "fields": [
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "jcr:title",
-          "label": "Title"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "jcr:description",
-          "label": "Description"
-        },
-        {
-          "component": "text",
-          "valueType": "string",
-          "name": "keywords",
-          "multi": true,
-          "label": "Keywords"
+          "name": "template",
+          "label": "Template"
         }
       ]
     }
+    
   ]
 }
