@@ -1,7 +1,7 @@
 {
   "models": [
     {
-      "id": "blog-post-metadata",
+      "id": "blog-post-metadata2",
       "fields": [
         {
           "component": "text",
