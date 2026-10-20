@@ -270,5 +270,43 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "page-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "blog-post-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "blog-post",
+        "readOnly": true
+      },
+      {
+        "component": "text",
+        "name": "resumen",
+        "label": "Resumen",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "imagen",
+        "label": "Imagen principal",
+        "valueType": "string",
+        "multi": false
+      }
+    ]
   }
 ]
