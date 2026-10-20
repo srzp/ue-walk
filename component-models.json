@@ -43,6 +43,25 @@
       },
       {
         "component": "text",
+        "valueType": "string",
+        "name": "jcr:title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "jcr:description",
+        "label": "Description"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "keywords",
+        "multi": true,
+        "label": "Keywords"
+      },
+      {
+        "component": "text",
         "name": "resumen",
         "label": "Resumen",
         "valueType": "string"
@@ -301,32 +320,6 @@
         "name": "textContent_ctaText",
         "label": "CTA label",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "blog-post-metadata2",
-    "fields": [
-      {
-        "component": "text",
-        "name": "template",
-        "label": "Template",
-        "valueType": "string",
-        "value": "blog-post",
-        "readOnly": true
-      },
-      {
-        "component": "text",
-        "name": "resumen",
-        "label": "Resumen",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "name": "imagen",
-        "label": "Imagen principal",
-        "valueType": "string",
-        "multi": false
       }
     ]
   }
