@@ -26,7 +26,17 @@
         "name": "template",
         "label": "Template",
         "valueType": "string",
-        "value": ""
+        "value": "",
+        "options": [
+          {
+            "name": "Página modular",
+            "value": ""
+          },
+          {
+            "name": "Blog post",
+            "value": "blog-post"
+          }
+        ]
       }
     ]
   },
