@@ -22,9 +22,9 @@
         "label": "Keywords"
       },
       {
-        "component": "select",
-        "name": "tipoPagina",
-        "label": "Tipo de página",
+        "component": "multiselect",
+        "name": "tipo",
+        "label": "Tipo",
         "options": [
           {
             "name": "Página modular",
@@ -43,8 +43,8 @@
     "fields": [
       {
         "component": "text",
-        "name": "tipoPagina",
-        "label": "Tipo de página",
+        "name": "tipo",
+        "label": "Tipo",
         "valueType": "string",
         "value": "blog-post",
         "readOnly": true
