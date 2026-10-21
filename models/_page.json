@@ -22,12 +22,10 @@
           "multi": true,
           "label": "Keywords"
         },
-         {
+        {
           "component": "text",
           "name": "template",
           "label": "Template",
-          "valueType": "string",
-          "value": "",
           "options": [
             {
               "name": "Página modular",
@@ -36,6 +34,17 @@
             {
               "name": "Blog post",
               "value": "blog-post"
+            }
+          ]
+        },
+        {
+          "component": "multiselect",
+          "name": "style",
+          "label": "Style",
+          "options": [
+            {
+              "name": "Highlight",
+              "value": "highlight"
             }
           ]
         }
