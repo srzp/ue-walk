@@ -22,9 +22,24 @@
         "label": "Keywords"
       },
       {
-        "component": "multiselect",
+        "component": "select",
         "name": "template",
         "label": "Template",
+        "options": [
+          {
+            "name": "Página modular",
+            "value": ""
+          },
+          {
+            "name": "Blog post",
+            "value": "blog-post"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "tipoPagina",
+        "label": "Tipo de página",
         "options": [
           {
             "name": "Página modular",
@@ -44,6 +59,14 @@
       {
         "component": "text",
         "name": "template",
+        "label": "Tipo de página",
+        "valueType": "string",
+        "value": "blog-post",
+        "readOnly": true
+      },
+      {
+        "component": "text",
+        "name": "tipoPagina",
         "label": "Template",
         "valueType": "string",
         "value": "blog-post",
