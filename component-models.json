@@ -69,7 +69,7 @@
         "label": "Keywords"
       },
       {
-        "component": "text",
+        "component": "richtext",
         "name": "resumen",
         "label": "Resumen",
         "valueType": "string"
