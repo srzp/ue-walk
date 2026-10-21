@@ -24,21 +24,6 @@
         },
         {
           "component": "select",
-          "name": "template",
-          "label": "Template",
-          "options": [
-            {
-              "name": "Página modular",
-              "value": ""
-            },
-            {
-              "name": "Blog post",
-              "value": "blog-post"
-            }
-          ]
-        },
-        {
-          "component": "select",
           "name": "tipoPagina",
           "label": "Tipo de página",
           "options": [
@@ -59,16 +44,8 @@
       "fields": [
         {
           "component": "text",
-          "name": "template",
-          "label": "Tipo de página",
-          "valueType": "string",
-          "value": "blog-post",
-          "readOnly": true
-        },
-        {
-          "component": "text",
           "name": "tipoPagina",
-          "label": "Template",
+          "label": "Tipo de página",
           "valueType": "string",
           "value": "blog-post",
           "readOnly": true
