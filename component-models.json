@@ -22,7 +22,7 @@
         "label": "Keywords"
       },
       {
-        "component": "text",
+        "component": "multiselect",
         "name": "template",
         "label": "Template",
         "options": [
@@ -33,17 +33,6 @@
           {
             "name": "Blog post",
             "value": "blog-post"
-          }
-        ]
-      },
-      {
-        "component": "multiselect",
-        "name": "style",
-        "label": "Style",
-        "options": [
-          {
-            "name": "Highlight",
-            "value": "highlight"
           }
         ]
       }
