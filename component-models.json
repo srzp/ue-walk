@@ -22,7 +22,7 @@
         "label": "Keywords"
       },
       {
-        "component": "multiselect",
+        "component": "select",
         "name": "tipoPagina",
         "label": "Tipo de página",
         "options": [
