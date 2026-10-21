@@ -23,8 +23,8 @@
       },
       {
         "component": "multiselect",
-        "name": "template",
-        "label": "Template",
+        "name": "tipoPagina",
+        "label": "Tipo de página",
         "options": [
           {
             "name": "Página modular",
@@ -43,8 +43,8 @@
     "fields": [
       {
         "component": "text",
-        "name": "template",
-        "label": "Template",
+        "name": "tipoPagina",
+        "label": "Tipo de página",
         "valueType": "string",
         "value": "blog-post",
         "readOnly": true
