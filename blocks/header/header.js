@@ -10,8 +10,8 @@
  */
 
 const CONFIG = {
-  homePath: '/blog', // página home cuyos hijos se listan
-  indexUrl: '/blog/nav-index.json', // índice pequeño solo con hijos directos
+  homePath: '/home', // página home cuyos hijos se listan
+  indexUrl: '/home/nav-index.json', // índice pequeño solo con hijos directos
   searchAction: '/blog/buscador/', // página de resultados (GET ?q=...)
   searchParam: 'q',
   searchPlaceholder: 'BUSCAR EN EL BLOG...',
