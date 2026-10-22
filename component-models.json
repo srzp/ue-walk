@@ -31,8 +31,12 @@
             "value": ""
           },
           {
-            "name": "Blog post",
+            "name": "Blog Post",
             "value": "blog-post"
+          },
+          {
+            "name": "Categoria Post",
+            "value": "categoria"
           }
         ]
       }
@@ -80,6 +84,56 @@
         "label": "Imagen principal",
         "valueType": "string",
         "multi": false
+      }
+    ]
+  },
+  {
+    "id": "categoria-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "template",
+        "label": "Template",
+        "valueType": "string",
+        "value": "categoria",
+        "readOnly": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "jcr:title",
+        "label": "Title"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "jcr:description",
+        "label": "Description"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "keywords",
+        "multi": true,
+        "label": "Keywords"
+      },
+      {
+        "component": "text",
+        "name": "titulo",
+        "label": "Titulo",
+        "valueType": "string"
+      },
+      {
+        "component": "number",
+        "name": "nav-order",
+        "label": "Orden en navegación",
+        "valueType": "number"
+      },
+      {
+        "component": "boolean",
+        "name": "nav-hide",
+        "label": "Ocultar en navegación",
+        "valueType": "boolean"
       }
     ]
   },
