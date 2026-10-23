@@ -23,7 +23,7 @@ indices:
       - '/home/*'
     target: /home/nav-index.json
     properties:
-      title:
+      titulo:
         select: head > meta[property="titulo"]
         value: attribute(el, "content")
       navOrder:
