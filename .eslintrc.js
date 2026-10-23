@@ -18,5 +18,6 @@ module.exports = {
     'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
     'linebreak-style': 'off', // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
+    'declaration-block-single-line-max-declarations': 'off', // permitir varios estilos en una misma linea
   },
 };
