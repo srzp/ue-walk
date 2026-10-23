@@ -19,5 +19,7 @@ module.exports = {
     'linebreak-style': 'off', // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
     'declaration-block-single-line-max-declarations': 'off', // permitir varios estilos en una misma linea
+    'function-paren-newline': 'off',
+    'function-call-argument-newline': 'off',
   },
 };

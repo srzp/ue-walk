@@ -24,7 +24,7 @@ indices:
     target: /home/nav-index.json
     properties:
       title:
-        select: head > meta[property="og:title"]
+        select: head > meta[property="titulo"]
         value: attribute(el, "content")
       navOrder:
         select: head > meta[name="nav-order"]

@@ -10,9 +10,9 @@
  */
 
 const CONFIG = {
-  homePath: '/home', // página home cuyos hijos se listan
-  indexUrl: '/home/nav-index.json', // índice pequeño solo con hijos directos
-  searchAction: '/home/buscador/', // página de resultados (GET ?q=...)
+  homePath: '/blog', // página home cuyos hijos se listan
+  indexUrl: '/blog/nav-index.json', // índice pequeño solo con hijos directos
+  searchAction: '/blog/buscador/', // página de resultados (GET ?q=...)
   searchParam: 'q',
   searchPlaceholder: 'BUSCAR EN EL BLOG...',
   claim: '', // el header actual no muestra claim; ej. 'Encendiendo el futuro de las personas'
@@ -41,6 +41,9 @@ function el(tag, attrs = {}, ...children) {
 
 const img = (src, alt = '', cls = null) => el('img', { src, alt, class: cls });
 
+/** Texto del menú: usa `titulo` (metadato titulo) y, si no existe, `title`. */
+const labelOf = (p) => p.titulo || p.title || p.path;
+
 const orderOf = (p) => {
   const n = Number(p.navOrder);
   return p.navOrder === undefined || p.navOrder === '' || Number.isNaN(n) ? Infinity : n;
@@ -58,7 +61,7 @@ async function fetchCategories() {
       const ao = orderOf(a);
       const bo = orderOf(b);
       if (ao !== bo) return ao < bo ? -1 : 1;
-      return (a.title || a.path).localeCompare(b.title || b.path, 'es');
+      return labelOf(a).localeCompare(labelOf(b), 'es');
     });
 }
 
@@ -134,7 +137,8 @@ export default async function decorate(block) {
   const main = document.querySelector('main');
   if (main && !main.id) main.id = 'mainContainer';
 
-  const skip = el('div', { class: 'skip-link' }, el('a', { href: '#mainContainer' }, 'Saltar al contenido principal'));
+  const skip = el('div', { class: 'skip-link' },
+    el('a', { href: '#mainContainer' }, 'Saltar al contenido principal'));
 
   const showMenu = el('button', {
     type: 'button',
@@ -144,7 +148,8 @@ export default async function decorate(block) {
     'aria-controls': 'mainNav',
   }, el('span', { class: 'lines' }));
 
-  const logo = el('a', { class: 'logo', href: `${CONFIG.homePath}/` }, img(CONFIG.logoOn.src, CONFIG.logoOn.alt));
+  const logo = el('a', { class: 'logo', href: `${CONFIG.homePath}/` },
+    img(CONFIG.logoOn.src, CONFIG.logoOn.alt));
 
   const claim = CONFIG.claim ? el('p', { class: 'claim' }, CONFIG.claim) : null;
 
@@ -165,7 +170,7 @@ export default async function decorate(block) {
   try {
     const categories = await fetchCategories();
     categories.forEach((page) => {
-      const a = el('a', { href: page.path }, page.title || page.path);
+      const a = el('a', { href: page.path }, labelOf(page));
       if (window.location.pathname.startsWith(page.path)) {
         a.classList.add('current');
         a.setAttribute('aria-current', 'page');
