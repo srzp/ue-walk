@@ -50,7 +50,7 @@ const orderOf = (p) => {
 };
 
 async function fetchCategories() {
-  const resp = await fetch(`${CONFIG.indexUrl}?limit=100`);
+  const resp = await fetch(CONFIG.indexUrl);
   if (!resp.ok) {
     // eslint-disable-next-line no-console
     console.warn(`Índice de navegación no disponible (${resp.status}): ${CONFIG.indexUrl}`);
