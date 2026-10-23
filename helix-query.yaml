@@ -33,5 +33,5 @@ indices:
         select: head > meta[name="nav-hide"]
         value: attribute(el, "content")
       titulo:
-        select: head > meta[property="titulo"]
+        select: head > meta[name="titulo"]
         value: attribute(el, "content")
