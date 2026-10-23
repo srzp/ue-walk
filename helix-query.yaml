@@ -18,10 +18,10 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
-    nav:
+  nav:
     include:
-      - '/blog/*'
-    target: /blog/nav-index.json
+      - '/home/*'
+    target: /home/nav-index.json
     properties:
       title:
         select: head > meta[property="og:title"]

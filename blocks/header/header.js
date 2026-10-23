@@ -12,7 +12,7 @@
 const CONFIG = {
   homePath: '/home', // página home cuyos hijos se listan
   indexUrl: '/home/nav-index.json', // índice pequeño solo con hijos directos
-  searchAction: '/blog/buscador/', // página de resultados (GET ?q=...)
+  searchAction: '/home/buscador/', // página de resultados (GET ?q=...)
   searchParam: 'q',
   searchPlaceholder: 'BUSCAR EN EL BLOG...',
   claim: '', // el header actual no muestra claim; ej. 'Encendiendo el futuro de las personas'
