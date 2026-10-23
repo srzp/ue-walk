@@ -51,8 +51,14 @@ const orderOf = (p) => {
 
 async function fetchCategories() {
   const resp = await fetch(`${CONFIG.indexUrl}?limit=100`);
-  if (!resp.ok) return [];
+  if (!resp.ok) {
+    // eslint-disable-next-line no-console
+    console.warn(`Índice de navegación no disponible (${resp.status}): ${CONFIG.indexUrl}`);
+    return [];
+  }
   const { data } = await resp.json();
+  // eslint-disable-next-line no-console
+  console.log('nav-index:', data.length, 'páginas', data.map((p) => p.path));
   const direct = new RegExp(`^${CONFIG.homePath}/[^/]+/?$`);
 
   return data
