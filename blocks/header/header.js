@@ -7,6 +7,11 @@
  *
  * Las categorías son las páginas hijas directas de la home del blog,
  * ordenadas por `nav-order` (metadato de página).
+ *
+ * Origen de las categorías, en este orden:
+ *   1. índice (CONFIG.indexUrl)
+ *   2. última copia buena guardada en localStorage
+ *   3. nav-fallback.json (menú estático del repositorio)
  */
 
 import buildSearch from './search.js';
@@ -19,6 +24,8 @@ const CONFIG = {
     param: 'q',
     placeholder: 'BUSCAR EN EL BLOG...',
   },
+  fetchTimeoutMs: 5000, // tiempo máximo de espera del índice antes de usar el respaldo
+  fallbackUrl: new URL('./nav-fallback.json', import.meta.url), // menú estático de emergencia
   claim: '', // el header actual no muestra claim; ej. 'Encendiendo el futuro de las personas'
   scrollThreshold: 20, // px de scroll a partir de los cuales se añade .scrolled
   logoOn: { src: '/icons/logo-on.svg', alt: 'Logotipo ON' },
@@ -53,14 +60,19 @@ const orderOf = (p) => {
   return p.navOrder === undefined || p.navOrder === '' || Number.isNaN(n) ? Infinity : n;
 };
 
-async function fetchCategories() {
-  const resp = await fetch(CONFIG.indexUrl);
-  if (!resp.ok) {
-    // eslint-disable-next-line no-console
-    console.warn(`Índice de navegación no disponible (${resp.status}): ${CONFIG.indexUrl}`);
-    return [];
-  }
-  const { data } = await resp.json();
+/* ---------- categorías del menú: índice -> caché -> respaldo estático ---------- */
+
+const CACHE_KEY = `header-nav:${CONFIG.indexUrl}`;
+
+/** Pide un JSON con tiempo límite; lanza error si la respuesta no es 2xx. */
+async function fetchJson(url) {
+  const resp = await fetch(url, { signal: AbortSignal.timeout(CONFIG.fetchTimeoutMs) });
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  return resp.json();
+}
+
+/** Deja solo las hijas directas de la home, visibles, y las ordena. */
+function selectCategories(data = []) {
   const direct = new RegExp(`^${CONFIG.homePath}/[^/]+/?$`);
 
   return data
@@ -71,6 +83,60 @@ async function fetchCategories() {
       if (ao !== bo) return ao < bo ? -1 : 1;
       return labelOf(a).localeCompare(labelOf(b), 'es');
     });
+}
+
+function readCache() {
+  try {
+    const cached = JSON.parse(window.localStorage.getItem(CACHE_KEY));
+    return Array.isArray(cached) ? cached : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function writeCache(list) {
+  try {
+    window.localStorage.setItem(CACHE_KEY, JSON.stringify(list));
+  } catch (e) {
+    // localStorage no disponible (modo privado, cuota...): se ignora
+  }
+}
+
+async function loadCategories() {
+  // 1) índice
+  try {
+    const { data } = await fetchJson(CONFIG.indexUrl);
+    const list = selectCategories(data);
+    if (list.length) {
+      writeCache(list);
+      return list;
+    }
+    // eslint-disable-next-line no-console
+    console.warn(`Índice de navegación sin categorías: ${CONFIG.indexUrl}`);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.warn(`Índice de navegación no disponible (${e.message}): ${CONFIG.indexUrl}`);
+  }
+
+  // 2) última copia buena guardada en este navegador
+  const cached = readCache();
+  if (cached.length) {
+    // eslint-disable-next-line no-console
+    console.warn('Menú: usando la última copia guardada en localStorage');
+    return cached;
+  }
+
+  // 3) menú estático del repositorio
+  try {
+    const { data } = await fetchJson(CONFIG.fallbackUrl);
+    // eslint-disable-next-line no-console
+    console.warn('Menú: usando el respaldo estático nav-fallback.json');
+    return selectCategories(data);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(`No se pudo cargar ningún menú (${e.message})`);
+    return [];
+  }
 }
 
 /* ---------- bloque ---------- */
@@ -113,7 +179,7 @@ export default async function decorate(block) {
   const list = el('ul');
 
   try {
-    const categories = await fetchCategories();
+    const categories = await loadCategories();
     categories.forEach((page) => {
       const a = el('a', { href: page.path }, labelOf(page));
       if (window.location.pathname.startsWith(page.path)) {
