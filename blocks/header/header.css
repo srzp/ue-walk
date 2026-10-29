@@ -227,11 +227,6 @@ header .header .header-search .header-search-form {
 
 header .header .header-search .header-search-form[hidden] { display: none; }
 
-/* El foco se indica con una línea inferior (el input no lleva borde) */
-header .header .header-search .header-search-form:focus-within {
-  box-shadow: inset 0 -2px 0 #004b93;
-}
-
 header .header .header-search .header-search-form input[type="search"] {
   flex: 1;
   min-width: 0;
