@@ -258,28 +258,16 @@ header .header .header-search .header-search-form input[type="search"]::-webkit-
   appearance: none;
 }
 
-/* Botón de cerrar: una X dibujada con CSS (sin depender de otro icono) */
+/* Botón de cerrar (icono /icons/ico-close.svg) */
 header .header .header-search .header-search-close {
-  position: relative;
   flex: none;
   width: 24px;
   height: 24px;
-}
-
-header .header .header-search .header-search-close::before,
-header .header .header-search .header-search-close::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 16px;
-  height: 2px;
-  background: #333;
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-header .header .header-search .header-search-close::after {
-  transform: translate(-50%, -50%) rotate(-45deg);
+  background-color: transparent;
+  background-image: url("/icons/ico-close.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px 16px;
 }
 
 header .header .header-search .header-search-close:hover { opacity: 0.6; }
