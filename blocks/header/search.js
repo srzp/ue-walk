@@ -48,7 +48,12 @@ export default function buildSearch(options = {}) {
   input.placeholder = placeholder;
   input.autocomplete = 'off';
 
-  form.append(label, input);
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'header-search-close';
+  close.setAttribute('aria-label', 'Oculta el buscador');
+
+  form.append(label, input, close);
   wrapper.append(toggle, form);
 
   const setOpen = (open) => {
@@ -58,6 +63,13 @@ export default function buildSearch(options = {}) {
   };
 
   toggle.addEventListener('click', () => setOpen(form.hidden));
+
+  // X: vacía el campo, cierra y devuelve el foco a la lupa
+  close.addEventListener('click', () => {
+    input.value = '';
+    setOpen(false);
+    toggle.focus();
+  });
 
   // Enter: no lanzar búsquedas vacías
   form.addEventListener('submit', (e) => {
