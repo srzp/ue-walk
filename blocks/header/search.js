@@ -1,15 +1,23 @@
 /**
  * Buscador para el header: una lupa que abre un campo de texto.
  * Al pulsar Enter se navega a:
- *   https://www.mutua.es/blog/buscador/?q=TERMINO
+ *   <action>?<param>=TERMINO
+ * p. ej. https://www.mutua.es/blog/buscador/?q=TERMINO
  * (es un <form method="GET">, así que el navegador codifica el término solo).
+ *
+ * aria-expanded va en el botón de la lupa (quien abre/cierra el campo),
+ * y aria-controls apunta al formulario.
  */
 
-const SEARCH_URL = 'https://www.mutua.es/blog/buscador/';
-const SEARCH_PARAM = 'q';
-const PLACEHOLDER = 'Buscar en el blog...';
+const DEFAULTS = {
+  action: 'https://www.mutua.es/blog/buscador/',
+  param: 'q',
+  placeholder: 'Buscar en el blog...',
+};
 
-export default function buildSearch() {
+export default function buildSearch(options = {}) {
+  const { action, param, placeholder } = { ...DEFAULTS, ...options };
+
   const wrapper = document.createElement('div');
   wrapper.className = 'header-search';
 
@@ -23,7 +31,7 @@ export default function buildSearch() {
   const form = document.createElement('form');
   form.id = 'header-search-form';
   form.className = 'header-search-form';
-  form.action = SEARCH_URL;
+  form.action = action;
   form.method = 'GET';
   form.setAttribute('role', 'search');
   form.hidden = true;
@@ -36,8 +44,8 @@ export default function buildSearch() {
   const input = document.createElement('input');
   input.type = 'search';
   input.id = 'header-search-input';
-  input.name = SEARCH_PARAM;
-  input.placeholder = PLACEHOLDER;
+  input.name = param;
+  input.placeholder = placeholder;
   input.autocomplete = 'off';
 
   form.append(label, input);

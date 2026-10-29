@@ -1,23 +1,24 @@
 /**
  * Header del blog de Mutua Madrileña para EDS + xwalk.
  *
- * Genera el mismo marcado y las mismas clases que usa el CSS actual del blog:
+ * Marcado generado:
  *   .rowLogo > .showMenu, .logo, .claim (opcional), .goMutua (.logoMM / .icoMM)
- *   #mainNav > ul > li (categorías) + li (buscador: .showSearch, .searchContent)
+ *   #mainNav > ul > li (categorías) + li.search (lupa + campo, ver search.js)
  *
  * Las categorías son las páginas hijas directas de la home del blog,
  * ordenadas por `nav-order` (metadato de página).
  */
 
-/* Importamos la caja del buscador */
 import buildSearch from './search.js';
 
 const CONFIG = {
   homePath: '/home', // página home cuyos hijos se listan
   indexUrl: '/home/nav-index.json', // índice pequeño solo con hijos directos
-  searchAction: '/home/buscador/', // página de resultados (GET ?q=...)
-  searchParam: 'q',
-  searchPlaceholder: 'BUSCAR EN EL BLOG...',
+  search: {
+    action: 'https://www.mutua.es/blog/buscador/', // se lanza GET ?q=TERMINO
+    param: 'q',
+    placeholder: 'BUSCAR EN EL BLOG...',
+  },
   claim: '', // el header actual no muestra claim; ej. 'Encendiendo el futuro de las personas'
   scrollThreshold: 20, // px de scroll a partir de los cuales se añade .scrolled
   logoOn: { src: '/icons/logo-on.svg', alt: 'Logotipo ON' },
@@ -60,8 +61,6 @@ async function fetchCategories() {
     return [];
   }
   const { data } = await resp.json();
-  // eslint-disable-next-line no-console
-  console.log('nav-index:', data.length, 'páginas', data.map((p) => p.path));
   const direct = new RegExp(`^${CONFIG.homePath}/[^/]+/?$`);
 
   return data
@@ -128,10 +127,9 @@ export default async function decorate(block) {
     console.error('No se pudieron cargar las categorías', e);
   }
 
-  list.append(buildSearch());
+  // Buscador: una sola vez, como último <li> de la lista
+  list.append(el('li', { class: 'search' }, buildSearch(CONFIG.search)));
   nav.append(list);
-  /* Anhadimos el buscador */
-  nav.append(buildSearch());
 
   block.append(skip, rowLogo, nav);
 
@@ -152,7 +150,9 @@ export default async function decorate(block) {
   });
 
   /* estado compacto al hacer scroll */
-  const onScroll = () => block.classList.toggle('scrolled', window.scrollY > CONFIG.scrollThreshold);
+  const onScroll = () => {
+    block.classList.toggle('scrolled', window.scrollY > CONFIG.scrollThreshold);
+  };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 }
