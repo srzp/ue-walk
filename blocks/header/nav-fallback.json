@@ -1,10 +1,10 @@
 {
-  "_note": "Menú de emergencia. Mismo formato que /home/nav-index.json. Mantenlo alineado con las categorías reales (path, titulo, navOrder).",
+  "_note": "Menú de emergencia. Mismo formato que nav-index.json. Mantenlo alineado con las categorías reales (path, titulo, navOrder).",
   "data": [
-    { "path": "/home/salud-y-bienestar", "title": "Salud y Bienestar", "titulo": "Salud y Bienestar", "navOrder": "10", "navHide": "" },
-    { "path": "/home/hogar", "title": "Hogar", "titulo": "Hogar", "navOrder": "20", "navHide": "" },
-    { "path": "/home/movilidad", "title": "Movilidad", "titulo": "Movilidad", "navOrder": "30", "navHide": "" },
-    { "path": "/home/estilo-de-vida", "title": "Estilo de vida", "titulo": "Estilo de vida", "navOrder": "40", "navHide": "" },
-    { "path": "/home/equipos-que-transforman", "title": "Equipos que transforman", "titulo": "Equipos que transforman", "navOrder": "50", "navHide": "" }
+    { "path": "/blog/salud-y-bienestar", "title": "Salud y Bienestar", "titulo": "Salud y Bienestar", "navOrder": "10", "navHide": "" },
+    { "path": "/blog/hogar", "title": "Hogar", "titulo": "Hogar", "navOrder": "20", "navHide": "" },
+    { "path": "/blog/movilidad", "title": "Movilidad", "titulo": "Movilidad", "navOrder": "30", "navHide": "" },
+    { "path": "/blog/estilo-de-vida", "title": "Estilo de vida", "titulo": "Estilo de vida", "navOrder": "40", "navHide": "" },
+    { "path": "/blog/equipos-que-transforman", "title": "Equipos que transforman", "titulo": "Equipos que transforman", "navOrder": "50", "navHide": "" }
   ]
 }
