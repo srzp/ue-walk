@@ -183,8 +183,10 @@ header .header #mainNav ul li a {
 }
 
 /* ---------- Buscador (lo genera search.js) ---------- */
-/* .header-search no tiene position: el campo se ancla a #mainNav (position: relative)
-   y, al abrirse, cubre la barra de navegación como en www.mutua.es/blog */
+
+/* .header-search no tiene position: el campo se ancla a #mainNav (position: relative) 
+  y, al abrirse, cubre la barra de navegación como en www.mutua.es/blog */
+
 header .header .header-search {
   display: flex;
   align-items: center;
@@ -209,10 +211,7 @@ header .header .header-search .header-search-toggle:focus-visible { opacity: 0.6
 
 header .header .header-search .header-search-form {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
   z-index: 1;
   display: flex;
   align-items: center;
