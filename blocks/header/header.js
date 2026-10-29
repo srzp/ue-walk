@@ -9,6 +9,9 @@
  * ordenadas por `nav-order` (metadato de página).
  */
 
+/* Importamos la caja del buscador */
+import buildSearch from './search.js';
+
 const CONFIG = {
   homePath: '/home', // página home cuyos hijos se listan
   indexUrl: '/home/nav-index.json', // índice pequeño solo con hijos directos
@@ -71,69 +74,6 @@ async function fetchCategories() {
     });
 }
 
-/* ---------- buscador ---------- */
-
-function buildSearch() {
-  // <a class="showSearch" role="button"> muestra/oculta el campo de búsqueda
-  const toggle = el('a', {
-    href: '/',
-    class: 'showSearch',
-    role: 'button',
-    'aria-expanded': 'false',
-    'aria-controls': 'searchContent',
-  }, 'Buscador');
-
-  const input = el('input', {
-    type: 'search',
-    class: 'textSearch',
-    id: 'textSearch',
-    name: CONFIG.searchParam,
-    placeholder: CONFIG.searchPlaceholder,
-    value: '',
-  });
-
-  const hide = el('a', {
-    href: '#',
-    class: 'hideSearch',
-    role: 'button',
-  }, 'Oculta el buscador');
-
-  // Sin botón de envío (como en el original): se lanza con Enter
-  const form = el(
-    'form',
-    {
-      action: CONFIG.searchAction,
-      method: 'GET',
-      'accept-charset': 'UTF-8',
-      name: 'searchForm',
-      id: 'searchForm',
-    },
-    el('label', { class: 'sr-only', for: 'textSearch' }, 'Texto de búsqueda'),
-    input,
-    hide,
-  );
-  const content = el('div', { class: 'searchContent', id: 'searchContent', role: 'search' }, form);
-
-  const setOpen = (open) => {
-    content.classList.toggle('activo', open);
-    toggle.setAttribute('aria-expanded', String(open));
-    if (open) input.focus(); else toggle.focus();
-  };
-  toggle.addEventListener('click', (e) => {
-    e.preventDefault();
-    setOpen(!content.classList.contains('activo'));
-  });
-  hide.addEventListener('click', (e) => {
-    e.preventDefault();
-    setOpen(false);
-  });
-  content.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setOpen(false);
-  });
-
-  return el('li', {}, toggle, content);
-}
-
 /* ---------- bloque ---------- */
 
 export default async function decorate(block) {
@@ -190,6 +130,8 @@ export default async function decorate(block) {
 
   list.append(buildSearch());
   nav.append(list);
+  /* Anhadimos el buscador */
+  nav.append(buildSearch());
 
   block.append(skip, rowLogo, nav);
 
