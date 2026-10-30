@@ -23,11 +23,13 @@ const CONFIG = {
     action: 'https://www.mutua.es/blog/buscador/', // se lanza GET ?q=TERMINO
     param: 'q',
     placeholder: 'BUSCAR EN EL BLOG...',
+    minLength: 3, // la búsqueda se lanza con 3 o más caracteres (como el original)
+    focusDelay: 700, // ms hasta enfocar el campo al abrir el buscador (como el original)
   },
   fetchTimeoutMs: 5000, // tiempo máximo de espera del índice antes de usar el respaldo
   fallbackUrl: new URL('./nav-fallback.json', import.meta.url), // menú estático de emergencia
   claim: '', // el header actual no muestra claim; ej. 'Encendiendo el futuro de las personas'
-  scrollThreshold: 20, // px de scroll a partir de los cuales se añade .scrolled
+  scrollThreshold: 50, // px de scroll (solo escritorio) para añadir .scrolled
   logoOn: { src: '/icons/logo-on.svg', alt: 'Logotipo ON' },
   logoMM: {
     full: '/icons/logo-mm.svg', // .logoMM (arriba del todo)
@@ -168,7 +170,7 @@ export default async function decorate(block) {
     class: 'goMutua',
     href: CONFIG.logoMM.href,
     target: '_blank',
-    rel: 'noopener',
+    rel: 'noopener noreferrer',
     title: 'Se abre en nueva pestaña',
     'aria-label': CONFIG.logoMM.label,
   }, img(CONFIG.logoMM.full, '', 'logoMM'), img(CONFIG.logoMM.icon, '', 'icoMM'));
@@ -193,32 +195,65 @@ export default async function decorate(block) {
     console.error('No se pudieron cargar las categorías', e);
   }
 
-  // Buscador: una sola vez, como último <li> de la lista
-  list.append(el('li', { class: 'search' }, buildSearch(CONFIG.search)));
+  /* Menú móvil. Como en el original, no bloquea el scroll de la página. */
+  const closeMenu = () => {
+    showMenu.classList.remove('open');
+    showMenu.setAttribute('aria-expanded', 'false');
+    nav.classList.remove('active');
+    nav.removeAttribute('style');
+  };
+
+  // Buscador: una sola vez, como último <li> de la lista.
+  // Al pulsar la lupa se cierra el menú, como en el original.
+  const search = buildSearch({
+    ...CONFIG.search,
+    isMobile: () => MOBILE.matches,
+    onToggle: closeMenu,
+  });
+
+  list.append(el('li', { class: 'search' }, search.element));
   nav.append(list);
 
   block.append(skip, rowLogo, nav);
 
-  /* menú móvil */
-  const setMenu = (open) => {
+  // Botón de menú: abre/cierra y cierra el buscador
+  showMenu.addEventListener('click', (e) => {
+    e.preventDefault();
+    search.setOpen(false);
+    const open = showMenu.classList.toggle('open');
     nav.classList.toggle('active', open);
-    showMenu.classList.toggle('open', open);
     showMenu.setAttribute('aria-expanded', String(open));
-    document.body.classList.toggle('fixBody', open);
-  };
-  showMenu.addEventListener('click', () => setMenu(!nav.classList.contains('active')));
-  MOBILE.addEventListener('change', () => setMenu(false));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && nav.classList.contains('active')) {
-      setMenu(false);
-      showMenu.focus();
-    }
+    if (open) nav.style.display = 'block';
+    else nav.removeAttribute('style');
   });
 
-  /* estado compacto al hacer scroll */
+  // Escape dentro del menú (o en el botón): lo cierra y devuelve el foco al botón
+  const onEscape = (e) => {
+    if (e.key !== 'Escape') return;
+    e.preventDefault();
+    showMenu.classList.remove('open');
+    nav.removeAttribute('style');
+    setTimeout(() => {
+      nav.classList.remove('active');
+      showMenu.setAttribute('aria-expanded', 'false');
+      showMenu.focus();
+    }, 100);
+  };
+  nav.addEventListener('keydown', onEscape);
+  showMenu.addEventListener('keydown', onEscape);
+
+  /* Estado compacto al hacer scroll: solo en escritorio, como el original */
   const onScroll = () => {
-    block.classList.toggle('scrolled', window.scrollY > CONFIG.scrollThreshold);
+    const compact = window.scrollY > CONFIG.scrollThreshold && !MOBILE.matches;
+    block.classList.toggle('scrolled', compact);
   };
   window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Al cambiar entre móvil y escritorio se reinicia el menú y se recalcula el scroll
+  MOBILE.addEventListener('change', () => {
+    closeMenu();
+    onScroll();
+  });
+
   onScroll();
 }

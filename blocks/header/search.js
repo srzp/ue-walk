@@ -1,22 +1,30 @@
 /**
- * Buscador para el header: una lupa que abre un campo de texto.
- * Al pulsar Enter se navega a:
- *   <action>?<param>=TERMINO
- * p. ej. https://www.mutua.es/blog/buscador/?q=TERMINO
- * (es un <form method="GET">, así que el navegador codifica el término solo).
+ * Buscador del header: lupa que abre un campo de texto sobre la barra de navegación.
+ * Comportamiento equivalente al de main.js del blog actual:
+ *  - Lupa: abre/cierra el campo (y avisa con onToggle para que el header cierre el menú).
+ *    El foco pasa al campo tras una pausa (focusDelay).
+ *  - Enter: lanza la búsqueda solo si el texto tiene minLength caracteres o más.
+ *    El formulario es GET: <action>?<param>=TERMINO
+ *  - Escape en el campo: cierra el buscador y devuelve el foco a la lupa.
+ *  - X: en escritorio cierra el buscador; en móvil (campo siempre visible) vacía el campo.
  *
- * aria-expanded va en el botón de la lupa (quien abre/cierra el campo),
- * y aria-controls apunta al formulario.
+ * Devuelve { element, setOpen, isOpen }.
  */
 
 const DEFAULTS = {
   action: 'https://www.mutua.es/blog/buscador/',
   param: 'q',
-  placeholder: 'Buscar en el blog...',
+  placeholder: 'BUSCAR EN EL BLOG...',
+  minLength: 3, // el original lanza la búsqueda con más de 2 caracteres
+  focusDelay: 700, // ms hasta enfocar el campo al abrir (como el original)
+  isMobile: () => false,
+  onToggle: null, // se llama al pulsar la lupa, antes de abrir/cerrar
 };
 
 export default function buildSearch(options = {}) {
-  const { action, param, placeholder } = { ...DEFAULTS, ...options };
+  const {
+    action, param, placeholder, minLength, focusDelay, isMobile, onToggle,
+  } = { ...DEFAULTS, ...options };
 
   const wrapper = document.createElement('div');
   wrapper.className = 'header-search';
@@ -33,6 +41,7 @@ export default function buildSearch(options = {}) {
   form.className = 'header-search-form';
   form.action = action;
   form.method = 'GET';
+  form.acceptCharset = 'UTF-8';
   form.setAttribute('role', 'search');
   form.hidden = true;
 
@@ -56,41 +65,53 @@ export default function buildSearch(options = {}) {
   form.append(label, input, close);
   wrapper.append(toggle, form);
 
+  const isOpen = () => !form.hidden;
+
   const setOpen = (open) => {
     form.hidden = !open;
     toggle.setAttribute('aria-expanded', String(open));
-    if (open) input.focus();
   };
 
-  toggle.addEventListener('click', () => setOpen(form.hidden));
+  const isValid = () => input.value.trim().length >= minLength;
 
-  // X: vacía el campo, cierra y devuelve el foco a la lupa
-  close.addEventListener('click', () => {
-    input.value = '';
-    setOpen(false);
-    toggle.focus();
+  // Lupa: cierra el menú (si lo hay abierto), abre/cierra el campo y lo enfoca tras una pausa
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (onToggle) onToggle();
+    setOpen(!isOpen());
+    setTimeout(() => {
+      if (isOpen()) input.focus();
+    }, focusDelay);
   });
 
-  // Enter: no lanzar búsquedas vacías
-  form.addEventListener('submit', (e) => {
-    if (!input.value.trim()) {
-      e.preventDefault();
+  // X: escritorio cierra; móvil (campo siempre visible) vacía y enfoca
+  close.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (isMobile()) {
+      input.value = '';
       input.focus();
-    }
-  });
-
-  // Escape cierra y devuelve el foco a la lupa
-  wrapper.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !form.hidden) {
+    } else {
       setOpen(false);
       toggle.focus();
     }
   });
 
-  // Clic fuera cierra
-  document.addEventListener('click', (e) => {
-    if (!form.hidden && !wrapper.contains(e.target)) setOpen(false);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (isValid()) form.submit();
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      setOpen(false);
+      toggle.focus();
+    }
   });
 
-  return wrapper;
+  // Por si el envío llega por otra vía: nunca con menos caracteres de los mínimos
+  form.addEventListener('submit', (e) => {
+    if (!isValid()) e.preventDefault();
+  });
+
+  return { element: wrapper, setOpen, isOpen };
 }
