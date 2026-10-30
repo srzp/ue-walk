@@ -384,5 +384,36 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "text-page",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "title",
+        "label": "Título",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "text",
+        "label": "Contenido",
+        "value": ""
+      },
+      {
+        "component": "multiselect",
+        "valueType": "string",
+        "name": "classes",
+        "label": "Estilo",
+        "options": [
+          {
+            "name": "Subtítulos medianos (36 px / 28 px)",
+            "value": "headings-md"
+          }
+        ]
+      }
+    ]
   }
 ]

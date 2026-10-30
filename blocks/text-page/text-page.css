@@ -1,0 +1,115 @@
+/*
+ * Bloque text-page. Portado del módulo .module.generic del CSS del blog
+ * (títulos h2/h3/h4, p.textPlain, ul.bulletList). rem del original (1rem = 10px)
+ * convertido a px. Requiere "Rufina" y "Open Sans" cargadas en styles/fonts.css.
+ */
+
+.text-page {
+  --tp-blue: #2a9dde;
+  --tp-pink: #f118a7;
+
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 60px 0;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #333;
+}
+
+/* ---------- Título de la página (era h2.h2 en el original) ---------- */
+.text-page .text-page-title {
+  clear: both;
+  margin: 0 0 20px;
+  font-family: Rufina, serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 64px;
+  color: var(--tp-blue);
+}
+
+/* ---------- Subtítulos dentro del texto ---------- */
+.text-page .text-page-content h2,
+.text-page .text-page-content h3,
+.text-page .text-page-content h4 {
+  clear: both;
+  margin: 0 0 20px;
+  font-family: Rufina, serif;
+  font-weight: 400;
+  color: var(--tp-blue);
+}
+
+/* Por defecto, como las secciones de "Condiciones legales" (h2 de 48px) */
+.text-page .text-page-content h2 { font-size: 48px; line-height: 64px; }
+.text-page .text-page-content h3 { font-size: 36px; line-height: 44px; }
+.text-page .text-page-content h4 { font-size: 28px; line-height: 36px; }
+
+/* Variante "subtítulos medianos", como "Política de cookies" (h2.h3 y h3.h4 del original) */
+.text-page.headings-md .text-page-content h2 { font-size: 36px; line-height: 44px; }
+.text-page.headings-md .text-page-content h3 { font-size: 28px; line-height: 36px; }
+.text-page.headings-md .text-page-content h4 { font-size: 24px; line-height: 32px; }
+
+/* ---------- Párrafos y listas ---------- */
+.text-page .text-page-content p,
+.text-page .text-page-content li {
+  margin: 0 0 20px;
+  font-size: 18px;
+  line-height: 36px;
+}
+
+.text-page .text-page-content > :last-child { margin-bottom: 0; }
+
+.text-page .text-page-content a {
+  font-weight: 700;
+  color: var(--tp-pink);
+  text-decoration: none;
+  overflow-wrap: anywhere; /* las URLs largas no desbordan en móvil */
+}
+
+.text-page .text-page-content a:hover,
+.text-page .text-page-content a:focus-visible { text-decoration: underline; }
+
+.text-page .text-page-content ul,
+.text-page .text-page-content ol { margin: 0; padding: 0; list-style: none; }
+
+/* Viñeta grande azul (ul.bulletList del original) */
+.text-page .text-page-content ul li {
+  position: relative;
+  padding-left: 60px;
+}
+
+.text-page .text-page-content ul li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  font-size: 80px;
+  line-height: 30px;
+  color: var(--tp-blue);
+}
+
+/* Listas numeradas sencillas */
+.text-page .text-page-content ol { list-style: decimal; padding-left: 40px; }
+
+/* ---------- Tablet ---------- */
+@media (width <= 1024px) {
+  .text-page { padding: 60px 24px; }
+}
+
+/* ---------- Móvil ---------- */
+@media (width <= 768px) {
+  .text-page .text-page-title { font-size: 36px; line-height: 50px; }
+
+  .text-page .text-page-content h2 { font-size: 36px; line-height: 50px; }
+  .text-page .text-page-content h3 { font-size: 32px; line-height: 48px; }
+  .text-page .text-page-content h4 { font-size: 28px; line-height: 36px; }
+
+  .text-page.headings-md .text-page-content h2 { font-size: 32px; line-height: 48px; }
+  .text-page.headings-md .text-page-content h3 { font-size: 28px; line-height: 36px; }
+  .text-page.headings-md .text-page-content h4 { font-size: 24px; line-height: 32px; }
+
+  .text-page .text-page-content p,
+  .text-page .text-page-content li { font-size: 16px; line-height: 28px; }
+
+  .text-page .text-page-content ul li { padding-left: 40px; }
+  .text-page .text-page-content ul { margin-bottom: 40px; }
+}
