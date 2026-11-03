@@ -4,12 +4,23 @@
  * convertido a px. Requiere "Rufina" y "Open Sans" cargadas en styles/fonts.css.
  */
 
+/* El boilerplate de EDS limita el ancho del wrapper (max-width 1200px), le añade padding
+   lateral y da 40px de margen a la sección. Aquí se neutraliza para que el texto ocupe
+   el mismo ancho que en el blog original (1280px), sin duplicar paddings ni márgenes. */
+main .section > .text-page-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+main > .section:has(> .text-page-wrapper) { margin: 0; }
+
 .text-page {
   --tp-blue: #2a9dde;
   --tp-pink: #f118a7;
 
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   padding: 60px 0;
   font-family: "Open Sans", Arial, sans-serif;
   font-size: 16px;
@@ -89,11 +100,6 @@
 
 /* Listas numeradas sencillas */
 .text-page .text-page-content ol { list-style: decimal; padding-left: 40px; }
-
-/* ---------- Tablet ---------- */
-@media (width <= 1024px) {
-  .text-page { padding: 60px 24px; }
-}
 
 /* ---------- Móvil ---------- */
 @media (width <= 768px) {
