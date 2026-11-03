@@ -17,8 +17,8 @@
 import buildSearch from './search.js';
 
 const CONFIG = {
-  homePath: '/home', // página home cuyos hijos se listan
-  indexUrl: '/home/nav-index.json', // índice pequeño solo con hijos directos
+  homePath: '/blog', // página home cuyos hijos se listan
+  indexUrl: '/blog/nav-index.json', // índice pequeño solo con hijos directos
   search: {
     action: 'https://www.mutua.es/blog/buscador/', // se lanza GET ?q=TERMINO
     param: 'q',

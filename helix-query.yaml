@@ -20,8 +20,8 @@ indices:
         value: attribute(el, "content")
   nav:
     include:
-      - '/home/*'
-    target: /home/nav-index.json
+      - '/blog/*'
+    target: /blog/nav-index.json
     properties:
       title:
         select: head > meta[property="og:title"]
