@@ -1,0 +1,6 @@
+mountpoints:
+  /:
+    url: "https://author-p223952-e2305083.adobeaemcloud.com/bin/franklin.delivery/srzp/ue-walk/index"
+    type: "markup"
+    suffix: ".html"
+  
