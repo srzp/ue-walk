@@ -1,6 +1,6 @@
 mountpoints:
   /:
-    url: "https://author-p223952-e2305083.adobeaemcloud.com/bin/franklin.delivery/srzp/ue-walk/index"
+    url: "https://author-p223952-e2305083.adobeaemcloud.com/bin/franklin.delivery/srzp/ue-walk/main"
     type: "markup"
     suffix: ".html"
   
